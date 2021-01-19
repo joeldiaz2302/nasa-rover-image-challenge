@@ -11,8 +11,9 @@ class RoversImagesList extends React.Component
 	constructor(props){
 		super(props);
 
-    	if(this.props.rover){
-			RoverImagesActions.setUrl(`rover/${this.props.rover}/images`);
+    	if(props.rover){
+    		console.log(props);
+			RoverImagesActions.setUrl(`rover/${props.rover}/images`);
     	}else{
 			RoverImagesActions.setUrl(`rover/images`);
     	}

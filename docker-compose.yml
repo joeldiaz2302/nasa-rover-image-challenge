@@ -20,8 +20,6 @@ services:
 
   #Nginx Service
   webserver:
-    env_file:
-      - .env
     image: nginx:1.18.0
     container_name: webserver
     restart: unless-stopped

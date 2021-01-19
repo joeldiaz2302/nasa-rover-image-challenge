@@ -1,1 +1,2 @@
-*.env
+.env
+apiserver/src/main/resources/static/images/

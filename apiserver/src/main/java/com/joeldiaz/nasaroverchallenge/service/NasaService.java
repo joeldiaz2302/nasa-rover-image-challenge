@@ -13,6 +13,7 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -58,8 +59,10 @@ abstract public class NasaService {
     }
 
     public String uploadFileFromInputStream(InputStream uploadedInputStream, String fileName) {
-        String fileLocation = "static/uploads/" + fileName;
-        try {  
+        String fileLocation = "src/main/resources/static/uploads/" + fileName;
+        logger.warn(fileLocation);
+        try {
+            FileUtils.forceMkdir(new File("src/main/resources/static/uploads/"));
             FileOutputStream out = new FileOutputStream(new File(fileLocation));  
             int read = 0;  
             byte[] bytes = new byte[1024];  
@@ -72,9 +75,9 @@ abstract public class NasaService {
             return fileLocation;   
         } catch (IOException e) {
             e.printStackTrace();
-            logger.warn(fileLocation);
-            return null;
-        }     
+        }
+        logger.warn(fileLocation);
+        return null;
     }
 
     public ConfigProperties getConfig() {

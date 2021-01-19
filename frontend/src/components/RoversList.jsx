@@ -54,10 +54,10 @@ class RoversList extends React.Component
 		if(this.state.rover !== null){
 			if(this.state.camera !== null){
 				//upload a dates file and pull all images for a rovers specific camera for those dates
-				ImageUploadActions.setUrl(`rover/${this.state.rover.name}/dates_upload`);
+				ImageUploadActions.setUrl(`rover/${this.state.rover.name}/dates_upload/${this.state.camera.name}`);
 			}else{
 				//upload a dates file and pull all images for a rover for those dates
-				ImageUploadActions.setUrl(`rover/${this.state.rover.name}/dates_upload/${this.state.camera.name}`);
+				ImageUploadActions.setUrl(`rover/${this.state.rover.name}/dates_upload`);
 			}
 		}else{
 			//upload a dates file and pull all images for all rovers for those dates
@@ -103,7 +103,7 @@ class RoversList extends React.Component
 								selection
 								clearable
 								style={{width: "160px"}}
-								options={this.state.rovers.map((rover) => {return { key: rover.id, text: rover.name, value: rover.name }})}
+								options={this.state.rovers ? this.state.rovers.map((rover) => {return { key: rover.id, text: rover.name, value: rover.name }}) : []}
 								onChange={this.onSelectRover} />
 						</Menu.Item>
 						<Menu.Item>

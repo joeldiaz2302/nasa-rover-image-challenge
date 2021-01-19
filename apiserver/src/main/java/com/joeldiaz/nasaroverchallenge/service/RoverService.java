@@ -134,29 +134,33 @@ public class RoverService extends NasaService {
 
     private void processImageUpload(String rover, String camera, String dateFileLocation, ObjectMapper objectMapper){
         String downloadLocation = "static/images/" + rover + "/";
-        try {
-            Scanner scanner = new Scanner(new File(dateFileLocation));
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                try {
-                    String earthDate = this.formatEarthDate(line);
-                    PhotoList photos = objectMapper
-                            .readValue(this.getRoversCameraPhotosList(rover, camera, earthDate), PhotoList.class);
-                    for (Photo photo : photos.getPhotos()) {
-                        String photoName = NasaRepositoryClient.encodeString(photo.getImgSrc());
-                        NasaRepositoryClient.downloadFromUrl(photo.getImgSrc(),
-                                downloadLocation + "/" + photo.camera.getName() + "/" + earthDate.replaceAll("-", ""), photoName);
+        logger.debug("static/images/" + rover + "/");
+        logger.debug(camera + " " + dateFileLocation);
+        if(dateFileLocation != null){
+            try {
+                Scanner scanner = new Scanner(new File(dateFileLocation));
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    try {
+                        String earthDate = this.formatEarthDate(line);
+                        PhotoList photos = objectMapper
+                                .readValue(this.getRoversCameraPhotosList(rover, camera, earthDate), PhotoList.class);
+                        for (Photo photo : photos.getPhotos()) {
+                            String photoName = NasaRepositoryClient.encodeString(photo.getImgSrc());
+                            NasaRepositoryClient.downloadFromUrl(photo.getImgSrc(),
+                                    downloadLocation + "/" + photo.camera.getName() + "/" + earthDate.replaceAll("-", ""), photoName);
+                        }
+                    } catch (ParseException e) {
+                        logger.warn("Could not parse date from file line: " + line);
+                    } catch (JsonMappingException e) {
+                        logger.error("Could not load photo data", e);
+                    } catch (JsonProcessingException e) {
+                        logger.error("Could not load photo data", e);
                     }
-                } catch (ParseException e) {
-                    logger.warn("Could not parse date from file line: " + line);
-                } catch (JsonMappingException e) {
-                    logger.error("Could not load photo data", e);
-                } catch (JsonProcessingException e) {
-                    logger.error("Could not load photo data", e);
                 }
+            } catch (IOException e) {
+                logger.error("input stream could not be loaded", e);
             }
-        } catch (IOException e) {
-            logger.error("input stream could not be loaded", e);
         }
     }
     

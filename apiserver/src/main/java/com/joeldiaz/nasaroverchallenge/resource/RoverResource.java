@@ -84,11 +84,12 @@ public class RoverResource {
         String fileLocation;
         try {
             fileLocation = service.uploadFileFromInputStream(request.getInputStream(), "dates_config.txt");
+            logger.info(fileLocation);
             return service.downloadPhotosForRoverCamera(rover, camera, fileLocation);
         } catch (IOException e) {
             e.printStackTrace();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Upload file could not be found.").build();
         }
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Upload file could not be found.").build();
     }
 
 }
