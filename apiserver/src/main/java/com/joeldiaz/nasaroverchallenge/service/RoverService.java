@@ -67,15 +67,13 @@ public class RoverService extends NasaService {
 
                     try {
                         for (File file : files) {
-                            logger.warn("images/" + rover + file.toPath().toString().replaceAll("\\\\", "/")
-                            .substring(file.toPath().toString().indexOf(rover) + rover.length()));
                             if(camera != null){
                                 if (!file.getAbsolutePath().contains(camera)){
                                     continue;
                                 }
                             }
-                            logger.warn("images/" + rover + file.toPath().toString().replaceAll("\\\\", "/")
-                            .substring(file.toPath().toString().indexOf(rover) + rover.length()));
+                            logger.debug("images/" + rover + file.toPath().toString().replaceAll("\\\\", "/")
+                                        .substring(file.toPath().toString().indexOf(rover) + rover.length()));
                             URI uri = new URI("images/" + rover + file.toPath().toString().replaceAll("\\\\", "/")
                                         .substring(file.toPath().toString().indexOf(rover) + rover.length()));
                             foundImages.add(uri.toString());
