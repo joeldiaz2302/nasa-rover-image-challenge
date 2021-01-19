@@ -9,7 +9,7 @@ function addHeaders(params, headers){
 }
 
 function getUrl(location){
-	return `${process.env.REACT_APP_API_LOCATION}/api/${location}`;
+	return `${process.env.REACT_APP_API_HOST}/api/${location}`;
 }
 
 const ApiRequest = {
