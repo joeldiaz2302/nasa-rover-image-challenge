@@ -1,0 +1,43 @@
+version: '3.5'
+services:
+
+# Java Service
+  java:
+    build:
+      context: ./
+      dockerfile: java.Dockerfile
+    container_name: java
+    volumes:
+      - ./apiserver:/var/www
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8086:8086"
+    working_dir: /var/www
+    networks:
+      - nasanet
+    command: ["/bin/bash", "-c", "java -jar build/libs/nasa-rover-challenge-0.0.1-SNAPSHOT.jar"]
+
+# Node Service
+  node:
+    build:
+      context: ./
+      dockerfile: node.Dockerfile
+    container_name: node
+    working_dir: /var/www
+    volumes:
+      - ./frontend:/var/www
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3000:3000"
+    networks:
+      - nasanet
+    # command: ["/bin/bash", "-c", "yarn start"]
+    entrypoint: ["/bin/bash"]
+
+#Docker Networks
+networks:
+  nasanet:
+    name: nasanet
+    driver: bridge

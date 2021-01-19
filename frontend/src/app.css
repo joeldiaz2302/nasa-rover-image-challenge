@@ -1,0 +1,15 @@
+.borderless {
+    border: none;
+    box-shadow: none;
+}
+body {
+	background-color: #b7b7b7;
+}
+.fillwidth {
+	width: 100%;
+}
+
+.paginationContainer {
+	width: 35vw;
+	margin: auto;
+}
