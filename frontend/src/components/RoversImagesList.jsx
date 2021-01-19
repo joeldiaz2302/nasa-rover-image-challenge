@@ -68,7 +68,7 @@ class RoversImagesList extends React.Component
 						{this.state.images.length > 0 ?
 							<Container>
 								<Container style={{height: "500px"}}>
-									<Image src={`${process.env.REACT_APP_API_LOCATION}/${this.state.images[this.state.image]}`}
+									<Image src={`${process.env.REACT_APP_API_HOST}/${this.state.images[this.state.image]}`}
 											style={{maxHeight: "350px", margin: "auto"}} />
 								</Container>
 								<Container>
