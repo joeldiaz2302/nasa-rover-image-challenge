@@ -58,7 +58,7 @@ abstract public class NasaService {
     }
 
     public String uploadFileFromInputStream(InputStream uploadedInputStream, String fileName) {
-        String fileLocation = "uploads/" + fileName;
+        String fileLocation = "static/uploads/" + fileName;
         try {  
             FileOutputStream out = new FileOutputStream(new File(fileLocation));  
             int read = 0;  
