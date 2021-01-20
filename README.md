@@ -17,6 +17,7 @@ For the node project navigate to the ./frontend directory in terminal and run:
 npm install
 yarn build
 ```
+
 For the node application, you need to change the .env file found in the frontend directory. If you are running this in the docker setup you should use:
 ```env
 REACT_APP_API_LOCATION=
@@ -25,6 +26,9 @@ if you are running locally you should use:
 ```env
 REACT_APP_API_LOCATION=http://localhost:8086
 ```
+### *NOTE*:
+Because of some issues with running the initial node install `npm install` in docker on windows I have not included the docerized build commands in the dockerfiles so the builds should be run before starting with compose. 
+
 
 ### Improvements  
 This could be improved with the following consideration
