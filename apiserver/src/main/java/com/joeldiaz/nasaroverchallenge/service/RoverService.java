@@ -115,14 +115,14 @@ public class RoverService extends NasaService {
     private String getRoversCameraPhotosList(String roverName, String camera, String date) {
         NasaRepositoryClient client = new NasaRepositoryClient(this.getUrl() + "/" + roverName + "/photos",
                 PhotoList.class);
-        logger.info("getting photos for" + roverName + " from camera " + camera);
+        logger.debug("getting photos for" + roverName + " from camera " + camera);
         client.addParam("api_key", this.config.getProperty("api_key"));
         try {
             if (date != null) {
                 client.addParam("earth_date", this.formatEarthDate(date));
             }
         } catch (ParseException e) {
-            logger.info("Date failed");
+            logger.error("Date failed to parse", e);
         }
         if (camera != null) {
             client.addParam("camera", camera);
@@ -149,7 +149,8 @@ public class RoverService extends NasaService {
                                     downloadLocation + "/" + photo.camera.getName() + "/" + earthDate.replaceAll("-", ""), photoName);
                         }
                     } catch (ParseException e) {
-                        logger.warn("Could not parse date from file line: " + line);
+                        //This exception doesn't need to be logged as an error, it is expected and fine to not load a bad date
+                        logger.debug("Could not parse date from file line: " + line);
                     } catch (JsonMappingException e) {
                         logger.error("Could not load photo data", e);
                     } catch (JsonProcessingException e) {
